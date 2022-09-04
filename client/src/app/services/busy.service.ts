@@ -18,6 +18,7 @@ export class BusyService
       bdColor: 'rgba(255,255,255,0)',
       color: '#333333'
     });
+    
   }
   
   idle()
@@ -27,6 +28,7 @@ export class BusyService
     {
       this.busyRequestCount = 0;
       this.spinnerService.hide();
+      
     }
   }
 }

@@ -28,7 +28,7 @@
               "./node_modules/bootswatch/dist/united/bootstrap.min.css",
               "./node_modules/font-awesome/css/font-awesome.css",
               "./node_modules/ngx-toastr/toastr.css",
-              "./node_modules/ngx-spinner/animations/ball-scale-multiple.css",
+              "./node_modules/ngx-spinner/animations/line-scale-party.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -109,5 +109,7 @@
       }
     }
   },
-  "defaultProject": "client"
+  "cli": {
+    "analytics": "efe8dc52-055f-495a-b473-4d46002c79b3"
+  }
 }
