@@ -3,7 +3,7 @@ using API.Extensions;
 
 namespace API.Entities
 {
-    public class AppUser
+    public class Member
     {
         public int Id { get; set; }
 
@@ -24,6 +24,8 @@ namespace API.Entities
         public string Gender { get; set; }
 
         public string Introduction { get; set; }
+
+        public string LookingFor { get; set; }
 
         public string Interests { get; set; }
 

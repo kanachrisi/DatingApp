@@ -4,36 +4,36 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class UserRepository : IUserRepository
+    public class MemberRepository : IMemberRepository
     {
         private readonly DataContext _context;
 
-        public UserRepository(DataContext context)
+        public MemberRepository(DataContext context)
         {
             _context = context;
         }
 
-        async Task<AppUser> IUserRepository.GetUserByIdAsync(int id)
+        async Task<Member> IMemberRepository.GetMemberByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
         }
 
-        async Task<AppUser> IUserRepository.GetUserByUsernameAsync(string username)
+        async Task<Member> IMemberRepository.GetMemberByUsernameAsync(string username)
         {
             return await _context.Users.Include(p => p.Photos).SingleOrDefaultAsync(u => u.UserName == username);
         }
 
-        async Task<IEnumerable<AppUser>> IUserRepository.GetUsersAsync()
+        async Task<IEnumerable<Member>> IMemberRepository.GetMembersAsync()
         {
             return await _context.Users.Include(p => p.Photos).ToListAsync();
         }
 
-        async Task<bool> IUserRepository.SaveAllAsync()
+        async Task<bool> IMemberRepository.SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
         }
 
-        void IUserRepository.Update(AppUser user)
+        void IMemberRepository.Update(Member user)
         {
             _context.Entry(user).State = EntityState.Modified;
         }

@@ -15,7 +15,7 @@ namespace API.Data
                 return;
             }
             var userDate = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json");
-            var users = JsonSerializer.Deserialize<List<AppUser>>(userDate);
+            var users = JsonSerializer.Deserialize<List<Member>>(userDate);
 
             foreach (var user in users)
             {

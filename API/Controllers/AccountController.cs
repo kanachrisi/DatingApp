@@ -26,7 +26,7 @@ namespace API.Controllers
             if(await UserExists(registerDTO.UserName)) return BadRequest("Username is taken");
             using var hmac = new HMACSHA512();
 
-            var user = new AppUser
+            var user = new Member
             {
                 UserName = registerDTO.UserName.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDTO.Password)),
