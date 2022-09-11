@@ -6,14 +6,14 @@ import {NgxSpinnerService} from 'ngx-spinner';
 })
 export class BusyService
 {
-  busyRequestCount : number = 0;
+  busyRequestCount = 0;
 
   constructor (private spinnerService: NgxSpinnerService) {}
   
   busy()
   {
     this.busyRequestCount++;
-    this.spinnerService.show('main-spinner', {
+    this.spinnerService.show(undefined, {
       type: 'line-scale-party',
       bdColor: 'rgba(255,255,255,0)',
       color: '#333333'

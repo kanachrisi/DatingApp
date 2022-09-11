@@ -8,7 +8,7 @@ namespace API.DTOs
 
         public string Username { get; set; }
 
-        public string PhotoUrl { get; set; }
+        public string PhotoUrl { get; set; } //Main photo url
 
         public int Age { get; set; }
 
