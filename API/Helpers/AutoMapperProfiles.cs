@@ -21,6 +21,10 @@ namespace API.Helpers
             //..We want to receive from the client the MemberUpdateDto, so the maping is 
             //..From MemberUpdateDto To Member
             CreateMap<MemberUpdateDto, Member>();
+
+            //..We want to receive from the client the RegisterDto, so the maping is 
+            //..From RegisterDto To Member
+            CreateMap<RegisterDTO, Member>();
         }
     }
 }

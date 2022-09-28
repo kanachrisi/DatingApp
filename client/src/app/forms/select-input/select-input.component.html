@@ -1,0 +1,9 @@
+<div class="mb-3">
+    <select class="form-select form-select-md " 
+        name={{name}} (change)="optionSelected($event)">
+        <option disabled >{{label}}</option>
+        <option *ngFor="let option of options" [value]="option.name">
+            {{option.name}}
+        </option>
+    </select>
+</div>
