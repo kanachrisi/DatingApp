@@ -1,17 +1,19 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
+using API.Helpers;
 
 namespace API.Services
 {
     public interface IMemberRepository
     {
-        void Update(Member user);
+        public void Update(Member user);
 
-        Task<bool> SaveAllAsync();
+        public Task<bool> SaveAllAsync();
 
-        Task<IEnumerable<Member>> GetMembersAsync();
+        public Task<PaginatedList<Member>> GetMembersAsync(UserParams userParams);
 
-        Task<Member> GetMemberByIdAsync(int id);
+        public Task<Member> GetMemberByIdAsync(int id);
 
-        Task<Member> GetMemberByUsernameAsync(string username);
+        public Task<Member> GetMemberByUsernameAsync(string username);
     }
 }

@@ -1,4 +1,6 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
+using API.Helpers;
 using API.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,27 +15,45 @@ namespace API.Data
             _context = context;
         }
 
-        async Task<Member> IMemberRepository.GetMemberByIdAsync(int id)
+        public async Task<Member> GetMemberByIdAsync(int id)
         {
             return await _context.Users.FindAsync(id);
         }
 
-        async Task<Member> IMemberRepository.GetMemberByUsernameAsync(string username)
+        public async Task<Member> GetMemberByUsernameAsync(string username)
         {
             return await _context.Users.Include(p => p.Photos).SingleOrDefaultAsync(u => u.UserName == username);
         }
 
-        async Task<IEnumerable<Member>> IMemberRepository.GetMembersAsync()
+        public async Task<PaginatedList<Member>> GetMembersAsync(UserParams userParams)
         {
-            return await _context.Users.Include(p => p.Photos).ToListAsync();
+            var query = _context.Users
+                 .Include(p => p.Photos)
+                 .AsNoTracking()
+                 .AsQueryable();
+
+            query = query.Where(u => u.UserName != userParams.CurrentUsername);
+            query = query.Where(u => u.Gender == userParams.Gender);
+
+            var minDob = DateTime.Today.AddYears(-userParams.MaxAge - 1);
+            var maxDob = DateTime.Today.AddYears(-userParams.MinAge);
+            query = query.Where(u => u.DateOfBirth >= minDob && u.DateOfBirth <= maxDob);
+
+            query = userParams.OrderBy switch
+            {
+                "created" => query.OrderByDescending(u => u.Created),
+                _ => query.OrderByDescending(u => u.LastActive)
+            };
+
+            return await PaginatedList<Member>.CreatePaginatedListAsync(query, userParams.PageNumber, userParams.PageSize);
         }
 
-        async Task<bool> IMemberRepository.SaveAllAsync()
+        public async Task<bool> SaveAllAsync()
         {
             return await _context.SaveChangesAsync() > 0;
         }
 
-        void IMemberRepository.Update(Member user)
+        public void Update(Member user)
         {
             _context.Entry(user).State = EntityState.Modified;
         }
