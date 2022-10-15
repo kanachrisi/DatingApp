@@ -8,6 +8,7 @@ import {PaginatedResult} from '../_models/pagination';
 import { UserParams } from './../_models/userParams';
 import {AccountService} from './account.service';
 import {User} from '../_models/user';
+import { getPaginatedResult, getPaginationHeaders } from './paginationHelper';
 
 
 
@@ -50,14 +51,14 @@ export class MembersService
       return of(response);
     }
     
-    let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
+    let params = getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
     
     params = params.append('minAge', userParams.minAge.toString());
     params = params.append('maxAge', userParams.maxAge.toString());
     params = params.append('gender', userParams.gender);
     params = params.append('orderBy', userParams.orderBy);
     
-    return this.getPaginatedResult<Member[]>(this.baseUrl + 'users', params)
+    return getPaginatedResult<Member[]>(this.baseUrl + 'users', params, this.http)
       .pipe(map(response =>
       {
         this.membersCache.set(cacheKey, response);
@@ -136,12 +137,16 @@ export class MembersService
     
     /* return this.http.get<Partial<Member[]>>(this.baseUrl + 'likes?predicate=' + predicate); */
     
-    let params = this.getPaginationHeaders(pageNumber, pageSize);
+    /* let params = this.getPaginationHeaders(pageNumber, pageSize);
     params = params.append('predicate', predicate);
-    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params);
+    return this.getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params); */
+    
+    let params = getPaginationHeaders(pageNumber, pageSize);
+    params = params.append('predicate', predicate);
+    return getPaginatedResult<Partial<Member[]>>(this.baseUrl + 'likes', params, this.http);
   }
   
-  private getPaginationHeaders(pageNumber: number, pageSize: number)
+  /* private getPaginationHeaders(pageNumber: number, pageSize: number)
   {
     let params = new HttpParams();
     
@@ -165,5 +170,5 @@ export class MembersService
         return paginatedResult;
       })
     )
-  }
+  } */
 }

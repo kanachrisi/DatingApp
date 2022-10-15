@@ -39,6 +39,10 @@ namespace API.Entities
 
         public ICollection<MemberLike> LikedMembers { get; set; }
 
+        public ICollection<Message> MessagesSent { get; set; }
+
+        public ICollection<Message> MessagesReceived { get; set; }
+
         public int GetAge()
         {
             return DateOfBirth.CalculateAge();

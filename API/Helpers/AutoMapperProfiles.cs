@@ -25,6 +25,17 @@ namespace API.Helpers
             //..We want to receive from the client the RegisterDto, so the maping is 
             //..From RegisterDto To Member
             CreateMap<RegisterDTO, Member>();
+
+            CreateMap<Message, MessageDto>()
+                .ForMember(dest => dest.SenderPhotoUrl, 
+                    opt => opt.MapFrom(src =>
+                                src.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
+
+                .ForMember(dest => dest.RecipientPhotoUrl, 
+                   opt => opt.MapFrom(src =>
+                                src.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
+
+
         }
     }
 }
