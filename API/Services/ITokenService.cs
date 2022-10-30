@@ -4,6 +4,6 @@ namespace API.Services
 {
     public interface ITokenService
     {
-        string CreateToken(Member user);
+        Task<string> CreateToken(Member user);
     }
 }
